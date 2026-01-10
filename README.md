@@ -1,4 +1,4 @@
-![Alt text](CyberFarm_Screenshot.png?raw=true "Screenshot")
+![Screenshot](CyberFarm_Screenshot.png?raw=true "Screenshot")
 
 # 🌱 Cyber Farm
 
