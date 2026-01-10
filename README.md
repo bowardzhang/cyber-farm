@@ -51,95 +51,104 @@ water(2, 3)
 if is_mature(2, 3):
     harvest(2, 3)
 ```
+
 Scripts can be executed:
+- step-by-step (manual mode)
+- automatically (run-all mode)
 
-step-by-step (manual mode)
+During execution, the game visualizes each step on the farm, highlights the currently executing line of code, and updates the farm state in real time.
 
-automatically (run-all mode)
+---
 
-🖥 Tech Stack
-Frontend
+## 🖥 Tech Stack
 
-Vanilla JavaScript
+### Frontend
+- Vanilla JavaScript
+- HTML5 Canvas (perspective / isometric-style grid rendering)
+- CSS (tooltips, hover highlights, animations)
 
-HTML5 Canvas (isometric / perspective grid)
+### Backend
+- Python 3
+- FastAPI
+- WebSocket for real-time communication
+- Custom Python AST-based script executor
 
-CSS (tooltips, animations)
+---
 
-Backend
+## 🚀 Getting Started
 
-Python 3
+### 1. Clone the repository
 
-FastAPI
-
-WebSocket for real-time updates
-
-Custom Python AST-based script executor
-
-🚀 Getting Started
-1. Clone the repository
+```bash
 git clone https://github.com/your-username/cyber-farm.git
 cd cyber-farm
+```
 
-2. Start the backend
+### 2. Start the backend
+```bash
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload
+```
 
-
-Backend will run at:
+The backend will be available at:
 
 http://localhost:8000
 
-3. Start the frontend
+
+### 3. Start the frontend
 
 Open frontend/index.html directly
-or use a simple local server:
+or run a simple local server:
 
+```bash
 cd frontend
 python -m http.server 5500
-
+```
 
 Then open:
 
 http://localhost:5500
 
-🎯 Project Goal
+---
+
+## 🎯 Project Goal
 
 Cyber Farm is designed for:
 
-🧑‍🎓 Beginners learning Python
-
-👨‍🏫 Programming education and teaching demos
-
-🧪 Experimenting with automation logic
-
-🎮 Learning through interactive simulation
+- 🧑‍🎓 Beginners learning Python
+- 👨‍🏫 Programming education and teaching demos
+- 🧪 Experimenting with automation logic
+- 🎮 Learning through interactive simulation
 
 The long-term vision is to evolve Cyber Farm into a code-driven sandbox game where logic, optimization, and strategy matter more than clicks.
 
-🛣 Roadmap
+---
 
- User accounts & persistent farms
+## 🛣 Roadmap
 
- More crops and soil mechanics
+- User accounts and persistent farms
+- More crops and advanced soil mechanics
+- Fertilizer and nutrient systems
+- Weather and seasonal effects
+- Script challenges and puzzles
+- Leaderboards (best ROI, efficiency)
+- Mobile-friendly UI
 
- Weather system
+---
 
- Script sharing & challenges
-
- Leaderboards (best ROI, efficiency)
-
- Mobile-friendly UI
-
-📜 License
+## 📜 License
 
 MIT License
-Feel free to fork, modify, and build upon this project.
+You are free to use, modify, and distribute this project.
 
-🙌 Contributions
+---
+
+## 🙌 Contributions
 
 Contributions, ideas, and feedback are welcome!
 If you find a bug or have an idea, please open an issue or submit a pull request.
+
+---
 
 Happy farming — and happy coding! 🌱🐍
