@@ -347,7 +347,8 @@ function updateResource(gold, time) {
    WebSocket
 ============================================================ */
 
-const ws = new WebSocket(`ws://${location.host}/ws/run`);
+const protocol = location.protocol === "https:" ? "wss" : "ws";
+const ws = new WebSocket(`${protocol}://${location.host}/ws/run`);
 
 let executionActive = false;
 let executionMode = null;
