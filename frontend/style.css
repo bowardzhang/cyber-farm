@@ -170,3 +170,36 @@ canvas:active {
   font-weight: bold;
   text-shadow: 0 0 4px rgba(46, 204, 113, 0.6);
 }
+
+/* ---------- about Panel ---------- */
+#aboutWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#aboutPanel {
+  position: absolute;
+  top: 110%;
+  left: -100px;
+  min-width: 260px;
+
+  background: rgba(30, 30, 30, 0.92);
+  color: #fff;
+
+  border-radius: 10px;
+  padding: 12px 14px;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  z-index: 1000;
+}
+
+#aboutPanel.hidden {
+  display: none;
+}
+
+#aboutPanel b {
+  font-size: 15px;
+}
