@@ -1,3 +1,5 @@
+![Alt text](CyberFarm_Screenshot.png?raw=true "Title")
+
 # 🌱 Cyber Farm
 
 **Cyber Farm** is a browser-based farming simulation game designed to help users learn **Python programming basics through gameplay**.
