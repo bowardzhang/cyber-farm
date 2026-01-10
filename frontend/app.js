@@ -26,9 +26,13 @@ for x in range(6):
 for x in range(6):
     plant("eggplant", x, 4)
     water(x, 4)
+    
 for x in range(6):
     plant("tomato", x, 5)
-    water(x, 5)`,
+    water(x, 5)
+    
+for x in range(6):
+    harvest(x, 0)`,
   language: 'python',
   theme: 'vs',
   automaticLayout: true,
@@ -673,7 +677,24 @@ canvas.addEventListener("mouseleave", () => {
 });
 
 /* ============================================================
+   About Panel
+============================================================ */
+const aboutBtn = document.getElementById("aboutBtn");
+const aboutPanel = document.getElementById("aboutPanel");
+
+aboutBtn.onclick = (e) => {
+  e.stopPropagation();
+  aboutPanel.classList.toggle("hidden");
+};
+
+// 点击页面其它地方自动关闭
+document.addEventListener("click", () => {
+  aboutPanel.classList.add("hidden");
+});
+
+/* ============================================================
    Init
 ============================================================ */
 
 bgImg.onload = () => drawScene(currentFarm);
+
