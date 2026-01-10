@@ -229,6 +229,6 @@ app.mount(
     name="frontend"
 )
 
-@app.get("/")
+@app.get("/hello")
 async def root():
-    return {"greeting": "Hello, World!", "message": "Welcome to FastAPI-CyberFarm!"}
+    return {"greeting": "Hello, World!", "message": "Welcome to CyberFarm!"}
