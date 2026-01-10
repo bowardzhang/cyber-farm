@@ -32,17 +32,15 @@ TICK_INTERVAL_REAL = 0.1 # interval in second
 
 async def idle_farm_ticker(
     ws: WebSocket, farm: Farm,
-    stop_event: asyncio.Event, max_ticks: int = 999,
+    stop_event: asyncio.Event
 ):
     """
     Idle 状态下的真实时间 ticker
     每次推进农场时间1秒，并发送 farm_state
-    最多执行 max_ticks 次，防止无限运行
     """
-    tick_count = 0
 
     try:
-        while not stop_event.is_set() and tick_count < max_ticks:
+        while not stop_event.is_set() and farm.time < 199:
             await asyncio.sleep(TICK_INTERVAL_REAL)
 
             farm.tick(TICK_INTERVAL_FARM)
@@ -51,8 +49,6 @@ async def idle_farm_ticker(
                 "type": "farm_state",
                 "farm": farm.snapshot()
             })
-
-            tick_count += 1
 
     except asyncio.CancelledError:
         pass
@@ -228,7 +224,3 @@ app.mount(
     StaticFiles(directory=FRONTEND_DIR, html=True), 
     name="frontend"
 )
-
-@app.get("/hello/")
-def hello():
-    return {"greeting": "Hello, World!", "message": "Welcome to CyberFarm!"}
