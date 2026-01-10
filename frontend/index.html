@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cyber Farm</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">🌱 Cyber Farm</div>
+  <nav>
+    <button>Login / Register</button>
+    <button>About</button>
+    <select id="langSelect">
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="zh">简体中文</option>
+    </select>
+  </nav>
+</header>
+
+<div class="content">
+  <div class="panel" id="leftPanel">
+    <div class="panel-title" style="display:flex;justify-content:space-between;">
+      <span>Python Farm Script</span>
+      <div>
+        <button id="runAllBtn">▶ Run</button>
+        <button id="stepBtn">⏭ Step</button>
+        <button id="stopBtn" disabled>⏹ Stop</button>
+      </div>
+    </div>
+    <div id="editor"></div>
+    <div class="console" id="console"></div>
+  </div>
+
+  <!-- panel dragging bar -->
+  <div id="divider"></div>
+
+  <div class="panel" id="rightPanel">
+    <div class="panel-title">
+      <span>Farm View</span>
+      <span id="resource">💰 0 | 🕒 0</span>
+    </div>
+    <canvas id="farmCanvas"></canvas>
+    <div id="cellTooltip" class="tooltip hidden"></div>
+  </div>
+</div>
+
+<!-- ================= Monaco Editor (ESM) ================= -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
