@@ -202,7 +202,7 @@ const cropEmoji = {
 };
 
 function drawCrop(cell, p) {  
-  const baseSize = 42;
+  const baseSize = 44;
   const depthScale = 1.0 + p.depth * 0.25;
   const maturityScale = 0.6 + cell.maturity * 0.4;
   
