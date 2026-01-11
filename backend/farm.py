@@ -42,7 +42,7 @@ CROPS = {
 }
 
 GRID_SIZE = 6
-BACKGROUND = "assets/farm_bg.png"
+BACKGROUND = "assets/farm_bg.webp"
 
 # 0~1 field border in proportion of canvas
 FIELD_RATIO = {
@@ -223,3 +223,4 @@ class Farm:
             "gain": gain,
             "roi": roi
         }
+
