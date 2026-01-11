@@ -31,8 +31,8 @@ for x in range(6):
     plant("tomato", x, 5)
     water(x, 5)
     
-for x in range(6):
-    harvest(x, 0)`,
+for y in range(6):
+    harvest(0, y)`,
   language: 'python',
   theme: 'vs',
   automaticLayout: true,
@@ -91,6 +91,9 @@ function log(msg) {
 const canvas = document.getElementById('farmCanvas');
 const ctx = canvas.getContext('2d');
 
+let canvasCSSWidth = 0;
+let canvasCSSHeight = 0;
+
 let GRID = 0;
 let FIELD_RATIO = null; // 0~1 相对 canvas 的比例
 let field = null;
@@ -100,6 +103,7 @@ const floatingTexts = [];
 /* ---------- background ---------- */
 let bgImg = new Image();
 let bgRect = null;
+let bgScale = 1;
 
 function fieldPoint(r) {
   if (!bgRect) return { x: 0, y: 0 };
@@ -136,6 +140,9 @@ function updateFieldFromCanvas() {
 function resizeCanvas() {
   const rect = canvas.getBoundingClientRect();
   const dpr = window.devicePixelRatio || 1;
+  
+  canvasCSSWidth = rect.width;
+  canvasCSSHeight = rect.height;
 
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
@@ -194,12 +201,18 @@ const cropEmoji = {
   tomato: "🍅"
 };
 
-function drawCrop(cell, p) {
-  const base = 42 + p.depth * 12;
-  const scale = 0.6 + cell.maturity * 0.4;
+function drawCrop(cell, p) {  
+  const baseSize = 42;
+  const depthScale = 1.0 + p.depth * 0.25;
+  const maturityScale = 0.6 + cell.maturity * 0.4;
+  
+  // Crop尺寸跟随背景缩放，但是限制在32到64之间。
+  const size = Math.max(32, Math.min(64,
+      baseSize * bgScale * depthScale * maturityScale
+  ));
 
   ctx.save();
-  ctx.font = `${base * scale}px serif`;
+  ctx.font = `${size}px serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(cropEmoji[cell.type], p.x, p.y);
@@ -207,7 +220,7 @@ function drawCrop(cell, p) {
 }
 
 function drawHarvestIndicator(p, depth) {
-  const size = 14 + depth * 4;
+  const size = (14 + depth * 4) * bgScale;
   ctx.save();
   ctx.font = `${size}px serif`;
   ctx.textAlign = "center";
@@ -273,20 +286,19 @@ function drawFloatingTexts() {
 }
 
 function drawBackground() {
-  const cw = canvas.width;
-  const ch = canvas.height;
+  const cw = canvasCSSWidth;
+  const ch = canvasCSSHeight;
 
   const iw = bgImg.width;
   const ih = bgImg.height;
 
-  const scale = Math.min(cw / iw, ch / ih);
+  bgScale = Math.min(cw / iw, ch / ih);
 
-  const dw = iw * scale;
-  const dh = ih * scale;
+  const dw = iw * bgScale;
+  const dh = ih * bgScale;
 
-  const dx = (cw - dw) / 2;
-  //const dy = (ch - dh) / 2;
-  const dy = 0;             // 🔑 顶部对齐
+  const dx = (cw - dw) / 2; // 背景图左右居中
+  const dy = 0;             // 背景图顶部贴canvas
 
   bgRect = { x: dx, y: dy, w: dw, h: dh };
   ctx.drawImage(bgImg, dx, dy, dw, dh);
@@ -595,7 +607,7 @@ window.addEventListener("mousemove", e => {
 
   // ⭐ 很重要：Monaco + Canvas 都需要 resize
   editor.layout();
-  updateCanvas();
+  resizeCanvas();
 });
 
 /* ============================================================
