@@ -73,8 +73,24 @@ nav button.primary {
 
 /* Right panel */
 #rightPanel {
-  flex: 1;
   position: relative;
+  flex: 1;
+  height: 100vh;        /* 非常关键 */
+  overflow: hidden;     /* 防止溢出 */
+  display: flex;
+  flex-direction: column;
+}
+
+#farmContainer {
+  position: relative;
+  flex: 1;              /* 吃掉 rightPanel 剩余高度 */
+  width: 100%;
+}
+
+#farmCanvas {
+  display: block;       /* 防止 inline 空隙 */
+  width: 100%;
+  height: 100%;
 }
 
 /* ---------- Divider (Draggable) ---------- */
@@ -203,3 +219,4 @@ canvas:active {
 #aboutPanel b {
   font-size: 15px;
 }
+

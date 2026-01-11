@@ -97,28 +97,43 @@ let field = null;
 let EXEC_INTERVAL = 0; // in milliseconds
 const floatingTexts = [];
 
-function updateFieldFromCanvas() {
-  field = {
-    topLeft: {
-      x: FIELD_RATIO.topLeft[0] * canvas.width,
-      y: FIELD_RATIO.topLeft[1] * canvas.height
-    },
-    topRight: {
-      x: FIELD_RATIO.topRight[0] * canvas.width,
-      y: FIELD_RATIO.topRight[1] * canvas.height
-    },
-    bottomLeft: {
-      x: FIELD_RATIO.bottomLeft[0] * canvas.width,
-      y: FIELD_RATIO.bottomLeft[1] * canvas.height
-    },
-    bottomRight: {
-      x: FIELD_RATIO.bottomRight[0] * canvas.width,
-      y: FIELD_RATIO.bottomRight[1] * canvas.height
-    }
+/* ---------- background ---------- */
+let bgImg = new Image();
+let bgRect = null;
+
+function fieldPoint(r) {
+  if (!bgRect) return { x: 0, y: 0 };
+
+  return {
+    x: bgRect.x + r.x * bgRect.w,
+    y: bgRect.y + r.y * bgRect.h
   };
 }
 
-function updateCanvas() {
+function updateFieldFromCanvas() {
+  if (!FIELD_RATIO || !bgRect) return;
+
+  field = {
+    topLeft: fieldPoint({
+      x: FIELD_RATIO.topLeft[0],
+      y: FIELD_RATIO.topLeft[1]
+    }),
+    topRight: fieldPoint({
+      x: FIELD_RATIO.topRight[0],
+      y: FIELD_RATIO.topRight[1]
+    }),
+    bottomLeft: fieldPoint({
+      x: FIELD_RATIO.bottomLeft[0],
+      y: FIELD_RATIO.bottomLeft[1]
+    }),
+    bottomRight: fieldPoint({
+      x: FIELD_RATIO.bottomRight[0],
+      y: FIELD_RATIO.bottomRight[1]
+    })
+  };
+}
+
+function resizeCanvas() {
   const rect = canvas.getBoundingClientRect();
   const dpr = window.devicePixelRatio || 1;
 
@@ -126,14 +141,11 @@ function updateCanvas() {
   canvas.height = rect.height * dpr;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   
-  updateFieldFromCanvas();
   drawScene(currentFarm);
 }
 
-window.addEventListener("resize", updateCanvas);
-
-/* ---------- background ---------- */
-let bgImg = new Image();
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("orientationchange", resizeCanvas);
 
 /* ---------- grid mapping ---------- */
 const EMPTY_FARM = {
@@ -260,9 +272,31 @@ function drawFloatingTexts() {
   ctx.restore();
 }
 
+function drawBackground() {
+  const cw = canvas.width;
+  const ch = canvas.height;
+
+  const iw = bgImg.width;
+  const ih = bgImg.height;
+
+  const scale = Math.min(cw / iw, ch / ih);
+
+  const dw = iw * scale;
+  const dh = ih * scale;
+
+  const dx = (cw - dw) / 2;
+  //const dy = (ch - dh) / 2;
+  const dy = 0;             // 🔑 顶部对齐
+
+  bgRect = { x: dx, y: dy, w: dw, h: dh };
+  ctx.drawImage(bgImg, dx, dy, dw, dh);
+}
+
 function drawScene(farm = EMPTY_FARM) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+  
+  drawBackground();
+  updateFieldFromCanvas();
 
   updateResource(farm.gold ?? 0, farm.time ?? 0);
   
@@ -332,7 +366,7 @@ async function bootstrap() {
   
   currentFarm = data.farm;
 
-  updateCanvas();
+  resizeCanvas();
 }
 
 bootstrap();
