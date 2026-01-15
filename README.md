@@ -86,31 +86,17 @@ git clone https://github.com/your-username/cyber-farm.git
 cd cyber-farm
 ```
 
-### 2. Start the backend
+### 2. Start the App
 ```bash
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-The backend will be available at:
+
+### 3. Then open:
 
 http://localhost:8000
-
-
-### 3. Start the frontend
-
-Open frontend/index.html directly
-or run a simple local server:
-
-```bash
-cd frontend
-python -m http.server 5500
-```
-
-Then open:
-
-http://localhost:5500
 
 ---
 
